@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using System.Net;
 using System.Text;
 
 namespace Authentication;
@@ -24,7 +25,7 @@ public static class ApiExtensions
                 options.Events = new JwtBearerEvents
                 {
                     OnMessageReceived = context =>
-                    {
+                    {                        
                         context.Token = context.Request.Cookies["Token"];
 
                         return Task.CompletedTask;

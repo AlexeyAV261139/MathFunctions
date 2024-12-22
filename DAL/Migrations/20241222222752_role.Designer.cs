@@ -3,6 +3,7 @@ using System;
 using ISOCI.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DAL.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20241222222752_role")]
+    partial class role
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -98,9 +101,8 @@ namespace DAL.Migrations
                     b.Property<long?>("HistoryId")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("Parametr")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<long>("ParametrId")
+                        .HasColumnType("bigint");
 
                     b.Property<double>("Value")
                         .HasColumnType("double precision");
@@ -108,6 +110,8 @@ namespace DAL.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("HistoryId");
+
+                    b.HasIndex("ParametrId");
 
                     b.ToTable("ParametrValues");
                 });
@@ -168,6 +172,14 @@ namespace DAL.Migrations
                     b.HasOne("DAL.Entities.History", null)
                         .WithMany("ParametorValues")
                         .HasForeignKey("HistoryId");
+
+                    b.HasOne("DAL.Entities.Parametr", "Parametr")
+                        .WithMany()
+                        .HasForeignKey("ParametrId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Parametr");
                 });
 
             modelBuilder.Entity("DAL.Entities.Formula", b =>

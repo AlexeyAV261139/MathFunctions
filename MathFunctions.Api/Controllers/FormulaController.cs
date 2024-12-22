@@ -17,7 +17,7 @@ public class FormulaController : ControllerBase
     }   
 
     [Authorize(Policy = "AdminPolicy")]
-    [HttpPost]
+    [HttpPost("CreateFormula")]
     public IResult CreateFormula(CreateFormulaRequest request)
     {
         var parametors = request.Parametors
@@ -30,7 +30,7 @@ public class FormulaController : ControllerBase
     }
 
     [Authorize(Policy = "AdminPolicy")]
-    [HttpPost]
+    [HttpPost("DeleteFormula")]
     public IResult DeleteFormula(long formulaId)
     {        
         _formulaRepository.Delete(formulaId);

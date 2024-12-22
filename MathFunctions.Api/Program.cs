@@ -19,7 +19,9 @@ public class Program
 
         builder.Services.AddSingleton<ApplicationContext>();
         builder.Services.AddSingleton<UserService>();
-        builder.Services.AddSingleton<UserService>();
+        builder.Services.AddSingleton<FormulaRepository>();
+        builder.Services.AddSingleton<HistoryRepository>();
+        builder.Services.AddSingleton<UserRepository>();
         builder.Services.AddSingleton<JwtProvider>();
         builder.Services.AddSingleton<UserRepository>();
         builder.Services.AddSingleton<PasswordHasher>();

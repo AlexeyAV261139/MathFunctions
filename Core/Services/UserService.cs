@@ -16,15 +16,19 @@ public class UserService
         _jwtProvider = jwtProvider;
     }
 
-    public void Register(string userName, string login, string password)
+    public void Register(string login, string password, string role)
     {
+        if (_repository.GetByLogin(login) != null)
+            throw new Exception("Логин занят");
+
         var hashedPassword = _hasher.Generate(password);
+        
 
         var user = new User
         {
-            UserName = userName,
             Login = login,
             PasswordHash = hashedPassword,
+            Role = role
         };
 
         _repository.Add(user);
@@ -43,5 +47,5 @@ public class UserService
         var token = _jwtProvider.GenerateToken(user);
 
         return token;
-    }
+    }   
 }

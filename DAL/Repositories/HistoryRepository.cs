@@ -13,9 +13,9 @@ public class HistoryRepository
         _context = context;
     }    
 
-    public void AddToHistory(History hystory)
+    public void AddToHistory(History history)
     {
-        _context.History.Add(hystory);
+        _context.History.Add(history);
         _context.SaveChanges();
     }
 

@@ -14,26 +14,18 @@ public class HistoryController(HistoryRepository historyRepository,
     private readonly HistoryRepository _historyRepository = historyRepository;
     private readonly FormulaRepository _formulaRepository = formulaRepository;
     private readonly UserRepository _userRepository = userRepository;
-
+    
     [Authorize]
-    [HttpGet]
-    public IResult GetHisory()
-    {
-        return Results.Ok();
-    }
-
-    [Authorize]
-    [HttpGet]
+    [HttpPost]
     public IResult AddToHistory(AddToHistoryRequest request)
     {
         var formula = _formulaRepository.GetById(request.FormulaID);
-        var user = _userRepository.GetById(request.UserId);
         var parametors = new List<ParametrValue>(request.Parametors.Count);
         for (var i = 0; i < formula.Parametrs.Count; i++)
         {
             parametors.Add(new ParametrValue()
             {
-                Parametr = formula.Parametrs[i],
+                Parametr = request.Parametors[i].Parametor,
                 Value = request.Parametors[i].Value
             });
         }
@@ -42,7 +34,7 @@ public class HistoryController(HistoryRepository historyRepository,
         {
             Formula = formula,
             Result = request.Result,
-            User = user,
+            UserId = request.UserId,
             ParametorValues = parametors,
         };
 

@@ -4,6 +4,6 @@ namespace DAL.Entities;
 
 public class ParametrValue : Entity
 {
-    public Parametr Parametr { get; set; }
+    public string Parametr { get; set; }
     public double Value { get; set; }
 }

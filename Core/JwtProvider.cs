@@ -9,11 +9,13 @@ public class JwtProvider
 {
     public string GenerateToken(User user)
     {
-        Claim[] claims = 
+        List<Claim> claims = 
         [
             new("userId", user.Id.ToString()),
-            new("Admin", "true")
-        ];            
+        ];
+
+        if (user.Role == "Admin")
+            claims.Add(new("Admin", "true"));
 
         var signingCredentials = new SigningCredentials(
             new SymmetricSecurityKey(Encoding.UTF8.GetBytes("mysupersecret_secretsecretsecretkey!123")),

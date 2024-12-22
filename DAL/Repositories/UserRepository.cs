@@ -18,12 +18,11 @@ public class UserRepository
         _context.SaveChanges();
     }
 
-    public User GetByLogin(string login)
+    public User? GetByLogin(string login)
     {
         var user = _context.Users
             .AsNoTracking()
-            .FirstOrDefault(u => u.Login == login) ?? throw new Exception();
-
+            .FirstOrDefault(u => u.Login == login);
         return user;
     }
 

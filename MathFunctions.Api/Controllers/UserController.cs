@@ -18,14 +18,19 @@ public class UserController : ControllerBase
     [HttpPost("register")]
     public IResult Register(RegisterUserRequest request)
     {
-        _userService.Register(request.UserName, request.Email, request.Password);
+        _userService.Register(request.Login, request.Password, request.Role);
         return Results.Ok();
     }
 
     [HttpPost("login")]
     public IResult Login(LoginUserRequest request)
     {
+
         var token = _userService.Login(request.Login, request.Password);
+
+        foreach (var cookie in Request.Cookies.Keys)
+            Response.Cookies.Delete(cookie);
+
         Response.Cookies.Append("Token", token);
 
         return Results.Ok(token);
