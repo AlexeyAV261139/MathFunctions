@@ -1,4 +1,4 @@
-﻿namespace MathFunctions.Api.Controllers;
+﻿namespace MathFunctions.Api.Requests;
 
 public class RegisterUserRequest
 {

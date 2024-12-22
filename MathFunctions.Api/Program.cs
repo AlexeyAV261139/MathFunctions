@@ -1,4 +1,6 @@
 using Core;
+using Core.Services;
+using DAL.Repositories;
 using ISOCI.DAL;
 using Microsoft.AspNetCore.CookiePolicy;
 
@@ -21,6 +23,8 @@ public class Program
         builder.Services.AddSingleton<JwtProvider>();
         builder.Services.AddSingleton<UserRepository>();
         builder.Services.AddSingleton<PasswordHasher>();
+
+        builder.Services.AddApiAuthentication();
 
 
         var app = builder.Build();

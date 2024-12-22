@@ -1,7 +1,8 @@
-using Core;
+using Core.Services;
+using MathFunctions.Api.Requests;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MathFunctions.Api.Controllers;
+namespace MathFunctions.Api.Requests;
 
 [ApiController]
 [Route("[controller]")]
@@ -24,17 +25,9 @@ public class UserController : ControllerBase
     [HttpPost("login")]
     public IResult Login(LoginUserRequest request)
     {
-        var token = _userService.Login(request.Email, request.Password);
+        var token = _userService.Login(request.Login, request.Password);
         Response.Cookies.Append("Token", token);
 
         return Results.Ok(token);
     }
 }
-
-[ApiController]
-[Route("[controller]")]
-public class FuncController : ControllerBase
-{    
-
-}
-

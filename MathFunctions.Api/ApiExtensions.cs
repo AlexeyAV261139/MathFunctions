@@ -7,8 +7,7 @@ namespace Authentication;
 public static class ApiExtensions
 {
     public static void AddApiAuthentication(
-        this IServiceCollection services,
-        IConfiguration configuration)
+        this IServiceCollection services)
     {
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
@@ -32,6 +31,13 @@ public static class ApiExtensions
                     }
                 };
             });
-        services.AddAuthentication();
+
+        services.AddAuthorization(options =>
+        {
+            options.AddPolicy("AdminPolicy", policy =>
+            {
+                policy.RequireClaim("Admin", "true");
+            });
+        });
     }
 }

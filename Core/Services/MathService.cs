@@ -1,8 +1,9 @@
-﻿using ISOCI.DAL;
+﻿using Core;
+using ISOCI.DAL;
 using ISOCI.DAL.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Core;
+namespace Core.Services;
 
 public class MathService
 {
@@ -32,7 +33,7 @@ public class MathService
 
         double result = a * Math.Cos(x) * b * c;
 
-        SaveHistory(expression, result, userParams);       
+        SaveHistory(expression, result, userParams);
 
         return result;
     }

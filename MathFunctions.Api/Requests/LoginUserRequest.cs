@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MathFunctions.Api.Controllers;
+namespace MathFunctions.Api.Requests;
 
 public record LoginUserRequest(
-    [Required] string Email,
+    [Required] string Login,
     [Required] string Password);

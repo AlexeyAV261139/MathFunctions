@@ -1,14 +1,14 @@
-﻿using ISOCI.DAL.Entities;
+﻿using DAL.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace ISOCI.DAL;
 
 public class ApplicationContext : DbContext
 {
-    public DbSet<ExpressionEntity> Expressions { get; set; } = null!;
-    public DbSet<HistoryEntity> History { get; set; } = null!;
-    public DbSet<AdminParamsEntity> AdminParams { get; set; } = null!;
-    public DbSet<UserParamsEntity> UserParams { get; set; } = null!;
+    public DbSet<Formula> Furmulas { get; set; }
+    public DbSet<History> History { get; set; }
+    public DbSet<Parametr> Parametros { get; set; }
+    public DbSet<ParametrValue> ParametrValues { get; set; }
     public DbSet<User> Users { get; set; } = null!;
 
 

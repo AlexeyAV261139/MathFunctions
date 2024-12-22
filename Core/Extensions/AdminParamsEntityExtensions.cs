@@ -1,6 +1,6 @@
 ﻿using ISOCI.DAL.Entities;
 
-namespace Core;
+namespace Core.Extensions;
 
 public static class AdminParamsEntityExtensions
 {

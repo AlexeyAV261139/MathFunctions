@@ -1,6 +1,6 @@
-﻿using ISOCI.DAL;
+﻿using DAL.Repositories;
 
-namespace Core;
+namespace Core.Services;
 public class UserService
 {
     private readonly PasswordHasher _hasher;
@@ -16,23 +16,23 @@ public class UserService
         _jwtProvider = jwtProvider;
     }
 
-    public void Register(string userName, string email, string password)
+    public void Register(string userName, string login, string password)
     {
         var hashedPassword = _hasher.Generate(password);
 
         var user = new User
         {
             UserName = userName,
+            Login = login,
             PasswordHash = hashedPassword,
-            Email = email,
         };
 
         _repository.Add(user);
     }
 
-    public string Login(string email, string password)
+    public string Login(string login, string password)
     {
-        var user = _repository.GetByEmail(email);
+        var user = _repository.GetByLogin(login);
 
         var result = _hasher.Verify(password, user.PasswordHash);
 
