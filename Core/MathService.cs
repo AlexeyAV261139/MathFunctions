@@ -58,6 +58,133 @@ public class MathService
         return result;
     }
 
+    public double SquareOfTheDifference(double a, double b)
+    {
+        const long expressionId = 3;
+
+        var expression = _context.Expressions
+           .Include(x => x.AdminParams)
+           .FirstOrDefault(x => x.Id == expressionId)!;
+
+        List<UserParamsEntity> userParams =
+        [
+            new UserParamsEntity(){ParamName = "a", ParamValue = a},
+            new UserParamsEntity(){ParamName = "b", ParamValue = b}
+        ];
+
+        double result = a * a - 2 * a * b - b * b;
+
+        SaveHistory(expression, result, userParams);
+
+        return result;
+    }
+
+    public double DifferenceOfSquares(double a, double b)
+    {
+        const long expressionId = 4;
+
+        var expression = _context.Expressions
+           .Include(x => x.AdminParams)
+           .FirstOrDefault(x => x.Id == expressionId)!;
+
+        List<UserParamsEntity> userParams =
+        [
+            new UserParamsEntity(){ParamName = "a", ParamValue = a},
+            new UserParamsEntity(){ParamName = "b", ParamValue = b}
+        ];
+
+        double result = (a - b) * (a + b);
+
+        SaveHistory(expression, result, userParams);
+
+        return result;
+    }
+
+    public double CubeOfSum(double a, double b)
+    {
+        const long expressionId = 5;
+
+        var expression = _context.Expressions
+           .Include(x => x.AdminParams)
+           .FirstOrDefault(x => x.Id == expressionId)!;
+
+        List<UserParamsEntity> userParams =
+        [
+            new UserParamsEntity(){ParamName = "a", ParamValue = a},
+            new UserParamsEntity(){ParamName = "b", ParamValue = b}
+        ];
+
+        double result = a * a * a + 3 * a * a * b + 3 * a * b * b + b * b * b;
+
+        SaveHistory(expression, result, userParams);
+
+        return result;
+    }
+
+    public double CubeOfDifference(double a, double b)
+    {
+        const long expressionId = 6;
+
+        var expression = _context.Expressions
+           .Include(x => x.AdminParams)
+           .FirstOrDefault(x => x.Id == expressionId)!;
+
+        List<UserParamsEntity> userParams =
+        [
+            new UserParamsEntity(){ParamName = "a", ParamValue = a},
+            new UserParamsEntity(){ParamName = "b", ParamValue = b}
+        ];
+
+        double result = a * a * a - 3 * a * a * b + 3 * a * b * b - b * b * b;
+
+        SaveHistory(expression, result, userParams);
+
+        return result;
+    }
+
+    public double ACubeMinusBCube(double a, double b)
+    {
+        const long expressionId = 7;
+
+        var expression = _context.Expressions
+           .Include(x => x.AdminParams)
+           .FirstOrDefault(x => x.Id == expressionId)!;
+
+        List<UserParamsEntity> userParams =
+        [
+            new UserParamsEntity(){ParamName = "a", ParamValue = a},
+            new UserParamsEntity(){ParamName = "b", ParamValue = b}
+        ];
+
+        double result = (a - b) * (a * a + a * b + b * b);
+
+        SaveHistory(expression, result, userParams);
+
+        return result;
+    }
+
+    public double ACubePlusBCube(double a, double b)
+    {
+        const long expressionId = 8;
+
+        var expression = _context.Expressions
+           .Include(x => x.AdminParams)
+           .FirstOrDefault(x => x.Id == expressionId)!;
+
+        List<UserParamsEntity> userParams =
+        [
+            new UserParamsEntity(){ParamName = "a", ParamValue = a},
+            new UserParamsEntity(){ParamName = "b", ParamValue = b}
+        ];
+
+        double result = (a + b) * (a * a - a * b + b * b);
+
+        SaveHistory(expression, result, userParams);
+
+        return result;
+    }
+
+
     private void SaveHistory(ExpressionEntity expression, double result, List<UserParamsEntity> userParams)
     {
         _context.History.Add(new()

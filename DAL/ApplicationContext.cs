@@ -9,6 +9,8 @@ public class ApplicationContext : DbContext
     public DbSet<HistoryEntity> History { get; set; } = null!;
     public DbSet<AdminParamsEntity> AdminParams { get; set; } = null!;
     public DbSet<UserParamsEntity> UserParams { get; set; } = null!;
+    public DbSet<User> Users { get; set; } = null!;
+
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
