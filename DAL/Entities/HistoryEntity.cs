@@ -4,9 +4,11 @@ namespace ISOCI.DAL.Entities;
 
 public class HistoryEntity : Entity
 {
-    public ExpressionEntity Expression { get; set; }
+    public required ExpressionEntity Expression { get; set; }
 
-    public List<ParamValueEntity> ParamValues { get; set; } = [];
+    public List<AdminParamsEntity> ApminParams { get; set; } = [];
+
+    public List<UserParamsEntity> UserParams { get; set; } = [];
 
     public double Result { get; set; }
 

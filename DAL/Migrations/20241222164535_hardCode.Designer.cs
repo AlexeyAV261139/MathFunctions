@@ -3,6 +3,7 @@ using System;
 using ISOCI.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DAL.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20241222164535_hardCode")]
+    partial class hardCode
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,36 +24,6 @@ namespace DAL.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
-
-            modelBuilder.Entity("AdminParamsEntityHistoryEntity", b =>
-                {
-                    b.Property<long>("ApminParamsId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("HistoriesId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("ApminParamsId", "HistoriesId");
-
-                    b.HasIndex("HistoriesId");
-
-                    b.ToTable("AdminParamsEntityHistoryEntity");
-                });
-
-            modelBuilder.Entity("HistoryEntityUserParamsEntity", b =>
-                {
-                    b.Property<long>("HistoriesId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("UserParamsId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("HistoriesId", "UserParamsId");
-
-                    b.HasIndex("UserParamsId");
-
-                    b.ToTable("HistoryEntityUserParamsEntity");
-                });
 
             modelBuilder.Entity("ISOCI.DAL.Entities.AdminParamsEntity", b =>
                 {
@@ -61,6 +34,9 @@ namespace DAL.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<long?>("ExpressionEntityId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("HistoryEntityId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("ParamName")
@@ -74,7 +50,9 @@ namespace DAL.Migrations
 
                     b.HasIndex("ExpressionEntityId");
 
-                    b.ToTable("AdminParams");
+                    b.HasIndex("HistoryEntityId");
+
+                    b.ToTable("Params");
                 });
 
             modelBuilder.Entity("ISOCI.DAL.Entities.ExpressionEntity", b =>
@@ -126,6 +104,9 @@ namespace DAL.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
+                    b.Property<long?>("HistoryEntityId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("ParamName")
                         .IsRequired()
                         .HasColumnType("text");
@@ -135,44 +116,20 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserParams");
-                });
+                    b.HasIndex("HistoryEntityId");
 
-            modelBuilder.Entity("AdminParamsEntityHistoryEntity", b =>
-                {
-                    b.HasOne("ISOCI.DAL.Entities.AdminParamsEntity", null)
-                        .WithMany()
-                        .HasForeignKey("ApminParamsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ISOCI.DAL.Entities.HistoryEntity", null)
-                        .WithMany()
-                        .HasForeignKey("HistoriesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("HistoryEntityUserParamsEntity", b =>
-                {
-                    b.HasOne("ISOCI.DAL.Entities.HistoryEntity", null)
-                        .WithMany()
-                        .HasForeignKey("HistoriesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ISOCI.DAL.Entities.UserParamsEntity", null)
-                        .WithMany()
-                        .HasForeignKey("UserParamsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.ToTable("ParamValues");
                 });
 
             modelBuilder.Entity("ISOCI.DAL.Entities.AdminParamsEntity", b =>
                 {
                     b.HasOne("ISOCI.DAL.Entities.ExpressionEntity", null)
-                        .WithMany("AdminParams")
+                        .WithMany("Params")
                         .HasForeignKey("ExpressionEntityId");
+
+                    b.HasOne("ISOCI.DAL.Entities.HistoryEntity", null)
+                        .WithMany("ApminParams")
+                        .HasForeignKey("HistoryEntityId");
                 });
 
             modelBuilder.Entity("ISOCI.DAL.Entities.HistoryEntity", b =>
@@ -186,9 +143,23 @@ namespace DAL.Migrations
                     b.Navigation("Expression");
                 });
 
+            modelBuilder.Entity("ISOCI.DAL.Entities.UserParamsEntity", b =>
+                {
+                    b.HasOne("ISOCI.DAL.Entities.HistoryEntity", null)
+                        .WithMany("UserParams")
+                        .HasForeignKey("HistoryEntityId");
+                });
+
             modelBuilder.Entity("ISOCI.DAL.Entities.ExpressionEntity", b =>
                 {
-                    b.Navigation("AdminParams");
+                    b.Navigation("Params");
+                });
+
+            modelBuilder.Entity("ISOCI.DAL.Entities.HistoryEntity", b =>
+                {
+                    b.Navigation("ApminParams");
+
+                    b.Navigation("UserParams");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,5 +1,6 @@
 using Core;
 using ISOCI.DAL;
+using ISOCI.DAL.Entities;
 
 namespace TestProject1;
 
@@ -10,18 +11,46 @@ public class UnitTest1
     [Fact]
     public void AddExpressionTestTest()
     {
-        MathService _mathService = new(_context);
-
-        _mathService.AddExpression("22888.32 * 30 / 323.34 / .5 - -1 / (2 + 22888.32) * 4 - 6", []);
+        _context.Expressions.Add(new()
+        {
+            ExpressionString = "y = a*cos(x)*b*c",
+            AdminParams = 
+            [
+                new AdminParamsEntity()
+                {
+                    ParamName = "a",
+                    ParamValue = 1
+                },
+                new AdminParamsEntity()
+                {
+                    ParamName = "a",
+                    ParamValue = 2
+                }
+            ]
+        });
+        _context.SaveChanges();
     }
 
     [Fact]
-    public void ExecuteExpressionWithoutParamsTest()
+    public void CalculateFormulaTest()
     {
-        MathService _mathService = new(_context);
-
-        var x1 = _mathService.Test();
-
-        var result = _mathService.ExecuteExpression(1, []);
+        _context.Expressions.Add(new()
+        {
+            ExpressionString = "y = a*cos(x)*b*c",
+            AdminParams =
+            [
+                new AdminParamsEntity()
+                {
+                    ParamName = "a",
+                    ParamValue = 1
+                },
+                new AdminParamsEntity()
+                {
+                    ParamName = "a",
+                    ParamValue = 2
+                }
+            ]
+        });
+        _context.SaveChanges();
     }
 }

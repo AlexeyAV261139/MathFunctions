@@ -4,7 +4,7 @@ namespace ISOCI.DAL.Entities;
 
 public class ExpressionEntity : Entity
 {
-    public string ExpressionString { get; set; } = "";
+    public required string ExpressionString { get; set; } = "";
 
-    public List<ParamsEntity> Params { get; set; } = [];
+    public required List<AdminParamsEntity> AdminParams { get; set; } = [];
 }
