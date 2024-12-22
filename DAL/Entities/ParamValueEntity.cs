@@ -2,8 +2,9 @@
 
 namespace ISOCI.DAL.Entities;
 
-public class ParameterEntity : Entity
+public class ParamValueEntity : Entity
 {
-    public string Name { get; set; }
+    public ParamsEntity Param { get; set; }
+
     public double Value { get; set; }
 }

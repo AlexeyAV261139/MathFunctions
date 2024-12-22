@@ -7,8 +7,8 @@ public class ApplicationContext : DbContext
 {
     public DbSet<ExpressionEntity> Expressions { get; set; } = null!;
     public DbSet<HistoryEntity> History { get; set; } = null!;
-    public DbSet<ParameterEntity> Parameters { get; set; } = null!;
-
+    public DbSet<ParamsEntity> Params { get; set; } = null!;
+    public DbSet<ParamValueEntity> ParamValues { get; set; } = null!;
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

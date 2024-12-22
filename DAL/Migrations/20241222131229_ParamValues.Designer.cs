@@ -3,6 +3,7 @@ using System;
 using ISOCI.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DAL.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20241222131229_ParamValues")]
+    partial class ParamValues
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -63,7 +66,7 @@ namespace DAL.Migrations
                     b.ToTable("History");
                 });
 
-            modelBuilder.Entity("ISOCI.DAL.Entities.ParamValueEntity", b =>
+            modelBuilder.Entity("ISOCI.DAL.Entities.ParamValue", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -74,17 +77,12 @@ namespace DAL.Migrations
                     b.Property<long?>("HistoryEntityId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("ParamId")
-                        .HasColumnType("bigint");
-
                     b.Property<double>("Value")
                         .HasColumnType("double precision");
 
                     b.HasKey("Id");
 
                     b.HasIndex("HistoryEntityId");
-
-                    b.HasIndex("ParamId");
 
                     b.ToTable("ParamValues");
                 });
@@ -97,16 +95,11 @@ namespace DAL.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
-                    b.Property<long?>("ExpressionEntityId")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("ParamName")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ExpressionEntityId");
 
                     b.ToTable("Params");
                 });
@@ -122,31 +115,11 @@ namespace DAL.Migrations
                     b.Navigation("Expression");
                 });
 
-            modelBuilder.Entity("ISOCI.DAL.Entities.ParamValueEntity", b =>
+            modelBuilder.Entity("ISOCI.DAL.Entities.ParamValue", b =>
                 {
                     b.HasOne("ISOCI.DAL.Entities.HistoryEntity", null)
                         .WithMany("ParamValues")
                         .HasForeignKey("HistoryEntityId");
-
-                    b.HasOne("ISOCI.DAL.Entities.ParamsEntity", "Param")
-                        .WithMany()
-                        .HasForeignKey("ParamId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Param");
-                });
-
-            modelBuilder.Entity("ISOCI.DAL.Entities.ParamsEntity", b =>
-                {
-                    b.HasOne("ISOCI.DAL.Entities.ExpressionEntity", null)
-                        .WithMany("Params")
-                        .HasForeignKey("ExpressionEntityId");
-                });
-
-            modelBuilder.Entity("ISOCI.DAL.Entities.ExpressionEntity", b =>
-                {
-                    b.Navigation("Params");
                 });
 
             modelBuilder.Entity("ISOCI.DAL.Entities.HistoryEntity", b =>

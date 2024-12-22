@@ -6,7 +6,7 @@ public class HistoryEntity : Entity
 {
     public ExpressionEntity Expression { get; set; }
 
-    public List<ParameterEntity> Parameters { get; set; } = [];
+    public List<ParamValueEntity> ParamValues { get; set; } = [];
 
     public double Result { get; set; }
 
