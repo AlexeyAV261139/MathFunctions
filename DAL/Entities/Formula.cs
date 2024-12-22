@@ -8,6 +8,8 @@ public class Formula : Entity
 
     public List<Parametr> Parametrs { get; set; }
 
+    public Formula() { }
+
     public Formula(string formulaString, List<Parametr> parametrs)
     {
         FormulaString = formulaString;
