@@ -30,7 +30,7 @@ public class FormulaController : ControllerBase
     }
 
     [Authorize(Policy = "AdminPolicy")]
-    [HttpPost("DeleteFormula")]
+    [HttpDelete("DeleteFormula")]
     public IResult DeleteFormula(long formulaId)
     {        
         _formulaRepository.Delete(formulaId);

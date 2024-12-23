@@ -1,0 +1,6 @@
+services:
+  mathfunctions.api:
+    image: ${DOCKER_REGISTRY-}mathfunctionsapi
+    build:
+      context: .
+      dockerfile: MathFunctions.Api\Dockerfile
