@@ -11,9 +11,15 @@ public class ApplicationContext : DbContext
     public DbSet<ParametrValue> ParametrValues { get; set; }
     public DbSet<User> Users { get; set; } = null!;
 
+    public ApplicationContext(DbContextOptions<ApplicationContext> options)
+        :base(options)
+    {
+        Database.EnsureCreated();
+    }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=MathExpr;Username=postgres;Password=qwerty");
-    }
+        optionsBuilder.LogTo(Console.WriteLine);
+    }      
+
 }
